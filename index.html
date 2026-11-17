@@ -592,12 +592,6 @@ a{color:inherit}
       copy.setAttribute('aria-hidden', 'true');
       rail.appendChild(copy);
     });
-    const controls = document.createElement('div');
-    controls.className = 'carousel-controls';
-    controls.setAttribute('role', 'group');
-    controls.setAttribute('aria-label', isGallery ? 'Controles das amostras' : 'Controles das fotos');
-    controls.innerHTML = `<button type="button" data-direction="-1" aria-label="Mostrar anterior" aria-controls="${rail.id}"><span aria-hidden="true">←</span></button><button type="button" data-direction="1" aria-label="Mostrar próxima" aria-controls="${rail.id}"><span aria-hidden="true">→</span></button>`;
-    stage.after(controls);
     let hovered = false, focused = false, dragging = null, ready = !isGallery;
     const animation = () => rail.getAnimations().find(a => a instanceof CSSAnimation);
     const sync = () => {
@@ -616,18 +610,15 @@ a{color:inherit}
       a.currentTime = ((Number(a.currentTime || 0) + pixels / distance * duration) % duration + duration) % duration;
     };
     const step = () => originals[0].getBoundingClientRect().width + parseFloat(getComputedStyle(rail).gap || 0);
-    controls.querySelectorAll('[data-direction]').forEach(button => button.addEventListener('click', () => {
-      sync(); seek(Number(button.dataset.direction) * step());
-    }));
     rail.addEventListener('keydown', event => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         event.preventDefault(); sync(); seek((event.key === 'ArrowRight' ? 1 : -1) * step());
       }
     });
-    const hasKeyboardFocus = () => (stage.contains(document.activeElement) || controls.contains(document.activeElement)) && document.activeElement.matches(':focus-visible');
+    const hasKeyboardFocus = () => stage.contains(document.activeElement) && document.activeElement.matches(':focus-visible');
     const enterFocus = () => { focused = hasKeyboardFocus(); sync(); };
     const leaveFocus = () => queueMicrotask(() => { focused = hasKeyboardFocus(); sync(); });
-    [stage, controls].forEach(element => {
+    [stage].forEach(element => {
       element.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hovered = true; sync(); } });
       element.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { hovered = false; sync(); } });
       element.addEventListener('focusin', enterFocus);
