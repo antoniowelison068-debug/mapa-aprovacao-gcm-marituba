@@ -669,6 +669,35 @@ body{line-height:1.6}
 .mechanism-grid h3,.audience-grid h3,.bonus-card h3,.steps-grid h3,.safety-cards h3{font-weight:700}
 .informatica-note{display:block}.informatica-note p{margin-top:8px}
 </style>
+<style>
+/* Botões com gradiente suave; destaque de compra com pulsação discreta. */
+.btn{
+ background:linear-gradient(135deg,#117c45 0%,#086239 100%);
+ border:0;border-radius:16px;color:#fff;
+ font-family:var(--font-body);font-weight:700;
+ box-shadow:0 14px 40px -14px rgba(11,123,67,.48);
+ transition:transform .2s ease,filter .2s ease,box-shadow .2s ease;
+}
+.btn:hover{
+ background:linear-gradient(135deg,#117c45 0%,#086239 100%);
+ filter:brightness(1.04);transform:translateY(-1px);
+ box-shadow:0 16px 42px -14px rgba(11,123,67,.58);
+}
+.btn:active{transform:translateY(0) scale(.99)}
+.btn:focus-visible{outline:3px solid var(--yellow);outline-offset:4px}
+.btn--purchase{animation:purchase-breathe 2.4s ease-in-out infinite;transform-origin:center}
+@keyframes purchase-breathe{
+ 0%,100%{transform:scale(1);box-shadow:0 14px 40px -14px rgba(11,123,67,.48)}
+ 50%{transform:scale(1.035);box-shadow:0 18px 50px -14px rgba(11,123,67,.68)}
+}
+.btn--purchase:hover,.btn--purchase:focus-visible{animation:none;transform:translateY(-1px)}
+.btn--purchase:active{animation:none;transform:translateY(0) scale(.99)}
+@media(prefers-reduced-motion:reduce){
+ .btn,.btn--purchase{animation:none;transition:none}
+ .btn:hover,.btn:active,.btn--purchase:hover,.btn--purchase:focus-visible,.btn--purchase:active{transform:none}
+}
+
+</style>
 </head>
 <body><aside class="daily-offer-bar" aria-label="Oferta de hoje"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 10-13h-7l1-7Z" fill="currentColor"/></svg><span>Confira a oferta de hoje <time data-offer-date></time></span></aside>
 <main>
