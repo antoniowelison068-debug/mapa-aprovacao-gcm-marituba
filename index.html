@@ -817,6 +817,39 @@ h1,h2,h3,h4,.hero h1,.closing h2,.section-title h2,.bonus-intro h2,.usage-headin
 #oferta .plan-premium .offer-card-ribbon::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(105deg,transparent 32%,rgb(255 255 255 / .12) 40%,rgb(255 255 255 / .8) 50%,rgb(255 255 255 / .12) 60%,transparent 68%);transform:translateX(-120%);animation:premium-gold-sweep 6s ease-in-out infinite;will-change:transform}
 @keyframes premium-gold-sweep{0%,18%{transform:translateX(-120%)}65%,100%{transform:translateX(120%)}}
 @media(prefers-reduced-motion:reduce){#oferta .plan-premium .offer-card-ribbon::after{animation:none;will-change:auto;transform:none;opacity:.28}}
+</style><style id="compact-mobile-offer-cards">@media(max-width:640px){
+#oferta .plans-comparison{gap:24px}#oferta .plan-card{width:calc(100% - 32px)}
+#oferta .offer-card-body,#oferta .plan-premium .offer-card-body{padding:18px 18px 20px}
+#oferta .offer-card-ribbon{padding:9px 12px;font-size:10px}
+#oferta .essential-cover-display{max-width:260px;margin:0 auto 14px;padding:4px 0 6px}
+#oferta .plan-mockup{max-width:270px;margin:0 auto 14px}
+#oferta .plan-card h3{font-size:21px;line-height:1.25}
+#oferta .plan-premium h3{font-size:23px}
+#oferta .offer-card-subtitle{font-size:12px;line-height:1.5;margin:8px 0 12px}
+#oferta .offer-checklist{gap:8px;margin:14px 0}
+#oferta .offer-checklist li{font-size:12px;line-height:1.5;padding-left:21px}
+#oferta .offer-checklist li::before{font-size:16px}
+#oferta .offer-exclusion{font-size:11px;line-height:1.5;margin:10px 0 0}
+#oferta .price{margin:16px 0 12px;gap:2px}
+#oferta .price strong{font-size:33px}
+#oferta .plan-premium .price strong{font-size:37px}
+#oferta .btn{min-height:50px;padding:13px 12px;font-size:12px;border-radius:12px}
+#oferta .offer-upgrade-strip{padding:14px 16px}
+#oferta .offer-upgrade-strip p{font-size:12px;margin-bottom:4px}
+#oferta .offer-upgrade-strip span{font-size:11px}
+#oferta .offer-upgrade-strip svg{width:19px;height:19px;margin-top:7px}
+#oferta .offer-bonus-panel{margin:14px 0;padding:12px;border-radius:14px}
+#oferta .offer-bonus-panel h4{font-size:10px;margin-bottom:6px;letter-spacing:.03em}
+#oferta .offer-bonus-row{grid-template-columns:52px minmax(0,1fr);gap:9px;padding:9px 0}
+#oferta .offer-bonus-row img{width:52px;height:45px}
+#oferta .offer-bonus-row span{font-size:9px}
+#oferta .offer-bonus-row h5{font-size:12px;line-height:1.35;margin:2px 0 0;font-weight:500}
+#oferta .offer-bonus-row p{display:none}
+#oferta .offer-upgrade-price{font-size:12px;line-height:1.5;margin-bottom:14px}
+#oferta .payment-security{margin-top:12px!important;font-size:11px}
+#oferta .offer-payment-methods{margin-top:8px;gap:8px 18px;font-size:11px}
+#oferta .offer-payment-methods svg{width:19px;height:19px}
+}
 </style></head>
 <body>
 <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=1385571756850482&amp;ev=PageView&amp;noscript=1"></noscript><aside class="daily-offer-bar" aria-label="Oferta de hoje"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 10-13h-7l1-7Z" fill="currentColor"></path></svg><span>Oferta especial somente hoje <time data-offer-date=""></time></span></aside>
