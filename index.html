@@ -989,4 +989,29 @@ h1,h2,h3,h4,.hero h1,.closing h2,.section-title h2,.bonus-intro h2,.usage-headin
   window.addEventListener('pageshow', updateDate);
 })();
 </script>
+<script id="match-fichas-speed">
+(() => {
+  const maps = document.querySelector('#previas [data-auto-rail]');
+  const sheets = document.querySelector('#fichas-visuais [data-auto-rail]');
+  if (!maps || !sheets) return;
+  const syncSpeed = () => {
+    const distance = rail => {
+      const count = rail.querySelectorAll(':scope > figure:not([aria-hidden])').length;
+      return count && rail.children[count] ? rail.children[count].offsetLeft - rail.children[0].offsetLeft : 0;
+    };
+    const mapDistance = distance(maps), sheetDistance = distance(sheets);
+    const duration = parseFloat(getComputedStyle(maps).animationDuration);
+    if (mapDistance > 0 && sheetDistance > 0 && duration > 0) {
+      sheets.style.animationDuration = `${duration * sheetDistance / mapDistance}s`;
+    }
+  };
+  syncSpeed();
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(syncSpeed);
+    observer.observe(maps.parentElement);
+    observer.observe(sheets.parentElement);
+  } else window.addEventListener('resize', syncSpeed);
+  document.fonts.ready.then(syncSpeed);
+})();
+</script>
 </body></html>
