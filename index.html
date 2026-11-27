@@ -884,6 +884,11 @@ body{background:var(--ref-cream);color:#353d35;line-height:1.6}.section{padding:
 @media(prefers-reduced-motion:reduce){#previas .gallery-rail .rail{scroll-snap-type:x proximity}#previas .gallery-rail .gallery-card{scroll-snap-align:start}}
 </style><style id="simulated-chats-styles">#duvidas-na-pratica{background:var(--bg);overflow:hidden}
 #duvidas-na-pratica .section-flow{gap:20px}
+.simulated-chats-carousel{display:grid;gap:6px;min-width:0}
+.simulated-chats-toggle{justify-self:end;display:grid;place-items:center;width:44px;height:44px;padding:0;background:var(--bg);color:var(--ink);border:1px solid #c9d3c7;border-radius:8px;font:600 17px/1 system-ui;cursor:pointer}
+.simulated-chats-toggle[hidden],.simulated-chats-rail:not(.is-looping)>[data-carousel-copy]{display:none}
+.simulated-chats-toggle:focus-visible,.simulated-chats-rail:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.simulated-chats-rail.is-looping{scroll-snap-type:none}
 .simulated-chats-rail{width:100%;max-width:100%;min-width:0;display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding:2px 2px 16px;overscroll-behavior-inline:contain;touch-action:pan-x pan-y;scrollbar-width:thin;scrollbar-color:#a8b8a8 transparent}
 .simulated-chat-card{flex:0 0 calc((100% - 44px)/3);min-width:0;scroll-snap-align:start;margin:0;background:#fff;border:1px solid #e0e3da;border-radius:14px;overflow:hidden}
 .simulated-chat-open{display:block;width:100%;padding:0;margin:0;border:0;background:#f7f5ef;cursor:zoom-in}
@@ -953,8 +958,10 @@ body{background:var(--ref-cream);color:#353d35;line-height:1.6}.section{padding:
 </div></section><template id="whatsapp-proof-template"><section class="section real-testimonials" aria-labelledby="testimonials-title"><div class="content content--980 section-flow"><header class="section-title"><h2 id="testimonials-title">Relatos de quem recebeu o material.</h2></header><div class="proof-carousel" tabindex="0" role="region" aria-label="Relatos reais autorizados de compradores"></div></div></section></template>
 <section id="duvidas-na-pratica" class="section simulated-chats" aria-labelledby="simulated-chats-title">
 <div class="content content--1180 section-flow">
-<header class="section-title"><h2 id="simulated-chats-title">Como encaixar o Mapa da Aprovação na sua rotina de estudos</h2><p>Em quatro conversas ilustrativas de WhatsApp, veja como revisar Informática pelo celular, imprimir só os temas de Legislação que você quer estudar e organizar mapas e explicações por disciplina.</p></header>
-<div class="simulated-chats-rail" tabindex="0" role="region" aria-label="Quatro conversas ilustrativas. Use as setas do teclado para navegar e selecione um print para ampliar.">
+<header class="section-title"><h2 id="simulated-chats-title">Dá para revisar para a GCM Marituba mesmo com pouco tempo?</h2><p>Veja nas conversas de WhatsApp como revisar Informática pelo celular ou imprimir só o assunto de Legislação da semana. Com o Mapa da Aprovação, você pode ir direto ao ponto que precisa estudar.</p></header>
+<div class="simulated-chats-carousel">
+<button type="button" class="simulated-chats-toggle" hidden aria-label="Pausar carrossel" title="Pausar carrossel"><span aria-hidden="true">Ⅱ</span></button>
+<div class="simulated-chats-rail" tabindex="0" role="region" aria-label="Conversas de WhatsApp. Use as setas do teclado para navegar e selecione um print para ampliar.">
 <figure class="simulated-chat-card" data-example="camila"><button type="button" class="simulated-chat-open" data-title="Mapa mental e explicação" aria-haspopup="dialog" aria-controls="simulated-chat-dialog" aria-label="Ampliar exemplo sobre mapa mental e explicação"><img src="https://raw.githubusercontent.com/antoniowelison068-debug/mapa-aprovacao-gcm-marituba/main/assets/simulacoes/02-camila.webp" width="916" height="1717" alt="Conversa sobre mapa mental e explicação." loading="lazy" decoding="async"></button></figure>
 
 <figure class="simulated-chat-card" data-example="bruno"><button type="button" class="simulated-chat-open" data-title="Legislação em uma pasta" aria-haspopup="dialog" aria-controls="simulated-chat-dialog" aria-label="Ampliar exemplo sobre legislação em uma pasta"><img src="https://raw.githubusercontent.com/antoniowelison068-debug/mapa-aprovacao-gcm-marituba/main/assets/simulacoes/04-bruno.webp" width="916" height="1717" alt="Conversa sobre legislação em uma pasta." loading="lazy" decoding="async"></button></figure>
@@ -963,6 +970,7 @@ body{background:var(--ref-cream);color:#353d35;line-height:1.6}.section{padding:
 
 <figure class="simulated-chat-card" data-example="juliana"><button type="button" class="simulated-chat-open" data-title="Apostila por disciplina" aria-haspopup="dialog" aria-controls="simulated-chat-dialog" aria-label="Ampliar exemplo sobre apostila por disciplina"><img src="https://raw.githubusercontent.com/antoniowelison068-debug/mapa-aprovacao-gcm-marituba/main/assets/simulacoes/06-juliana.webp" width="916" height="1717" alt="Conversa sobre apostila por disciplina." loading="lazy" decoding="async"></button></figure>
 
+</div>
 </div>
 </div>
 </section>
@@ -1260,35 +1268,143 @@ body{background:var(--ref-cream);color:#353d35;line-height:1.6}.section{padding:
   const section = document.getElementById('duvidas-na-pratica');
   const dialog = document.getElementById('simulated-chat-dialog');
   if (!section || !dialog) return;
+
   const rail = section.querySelector('.simulated-chats-rail');
+  const toggle = section.querySelector('.simulated-chats-toggle');
+  const toggleIcon = toggle.querySelector('span');
   const largeImage = dialog.querySelector('img');
   const title = dialog.querySelector('h2');
-  let opener = null;
-  section.querySelectorAll('.simulated-chat-open').forEach(button => {
-    button.addEventListener('click', () => {
-      opener = button;
-      const image = button.querySelector('img');
-      largeImage.src = image.currentSrc || image.src;
-      largeImage.alt = image.alt;
-      title.textContent = button.dataset.title;
-      dialog.showModal();
-      dialog.scrollTop = 0;
-    });
+  const cards = [...rail.children];
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const copies = cards.map(card => {
+    const copy = card.cloneNode(true);
+    copy.dataset.carouselCopy = '';
+    copy.setAttribute('aria-hidden', 'true');
+    copy.querySelector('button').tabIndex = -1;
+    return copy;
   });
+  rail.append(...copies);
+
+  let opener = null;
+  let hovering = false;
+  let touching = false;
+  let userPaused = false;
+  let resumeAfter = 0;
+  let frame = 0;
+  let lastTime = 0;
+  let position = 0;
+  let lastScroll = 0;
+  let cardStep = 0;
+  let loopDistance = 0;
+
+  function measure() {
+    cardStep = cards[1].offsetLeft - cards[0].offsetLeft;
+    loopDistance = copies[0].offsetLeft - cards[0].offsetLeft;
+  }
+
+  function setMotion() {
+    rail.classList.toggle('is-looping', !motion.matches);
+    toggle.hidden = motion.matches;
+    measure();
+  }
+
+  function advance(now) {
+    frame = requestAnimationFrame(advance);
+    const elapsed = Math.min(now - lastTime, 50);
+    lastTime = now;
+    if (motion.matches || userPaused || hovering || touching || dialog.open ||
+        rail.contains(document.activeElement) || now < resumeAfter || loopDistance <= 0) {
+      position = rail.scrollLeft;
+      return;
+    }
+
+    if (rail.scrollLeft !== lastScroll) position = rail.scrollLeft;
+    position = (position + elapsed * cardStep / 6000) % loopDistance;
+    rail.scrollLeft = position;
+    lastScroll = rail.scrollLeft;
+  }
+
+  const visibility = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting && !frame) {
+      lastTime = performance.now();
+      frame = requestAnimationFrame(advance);
+    } else if (!entry.isIntersecting && frame) {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    }
+  });
+
+  toggle.addEventListener('click', () => {
+    userPaused = !userPaused;
+    const label = userPaused ? 'Reproduzir carrossel' : 'Pausar carrossel';
+    toggle.setAttribute('aria-label', label);
+    toggle.title = label;
+    toggleIcon.textContent = userPaused ? '▶' : 'Ⅱ';
+  });
+  rail.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') hovering = true; });
+  rail.addEventListener('pointerleave', () => { hovering = false; });
+  rail.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') touching = true;
+  });
+  const endTouch = event => {
+    if (event.pointerType !== 'touch' || !touching) return;
+    touching = false;
+    resumeAfter = performance.now() + 900;
+  };
+  window.addEventListener('pointerup', endTouch);
+  window.addEventListener('pointercancel', endTouch);
+  rail.addEventListener('wheel', event => {
+    if (event.deltaX || event.shiftKey) resumeAfter = performance.now() + 900;
+  }, {passive:true});
+  rail.addEventListener('scroll', () => {
+    if (rail.scrollLeft !== lastScroll) resumeAfter = performance.now() + 900;
+  }, {passive:true});
+
+  rail.addEventListener('mousedown', event => {
+    if (event.target.closest('[data-carousel-copy] button')) event.preventDefault();
+  });
+  rail.addEventListener('click', event => {
+    const button = event.target.closest('.simulated-chat-open');
+    if (!button) return;
+    const card = button.closest('.simulated-chat-card');
+    opener = card.hasAttribute('data-carousel-copy') ? rail : button;
+    const image = button.querySelector('img');
+    largeImage.src = image.currentSrc || image.src;
+    largeImage.alt = image.alt;
+    title.textContent = button.dataset.title;
+    dialog.showModal();
+    dialog.scrollTop = 0;
+  });
+
   dialog.querySelector('button').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('close', () => { largeImage.removeAttribute('src'); opener?.focus({preventScroll:true}); });
+  dialog.addEventListener('close', () => {
+    largeImage.removeAttribute('src');
+    opener?.focus({preventScroll:true});
+  });
   dialog.addEventListener('click', event => {
     if (event.target !== dialog) return;
-    const r = dialog.getBoundingClientRect();
-    if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
   });
+
   rail.addEventListener('keydown', event => {
     if (event.target !== rail || !['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
     event.preventDefault();
-    if (event.key === 'Home') rail.scrollLeft = 0;
-    else if (event.key === 'End') rail.scrollLeft = rail.scrollWidth;
-    else rail.scrollBy({left:(event.key === 'ArrowRight' ? 1 : -1) * (rail.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).gap)),behavior:'auto'});
+    if (event.key === 'Home') {
+      rail.scrollLeft = 0;
+    } else if (event.key === 'End') {
+      const lastCard = cards[cards.length - 1].getBoundingClientRect();
+      rail.scrollLeft += lastCard.right - rail.getBoundingClientRect().right + 2;
+    } else {
+      rail.scrollLeft += event.key === 'ArrowRight' ? cardStep : -cardStep;
+    }
   });
+
+  setMotion();
+  motion.addEventListener('change', setMotion);
+  new ResizeObserver(measure).observe(rail);
+  visibility.observe(rail);
 })();
 </script>
 </body></html>
